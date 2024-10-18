@@ -59,7 +59,20 @@ const MainPage = () => {
             array.push(i);
         }
         return array;
-    }
+    };
+
+    const handleDelete = (id) => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this company?");
+        if (confirmDelete) {
+            console.log(`Company with ID ${id} has been deleted.`);
+            handleRefresh();
+        }
+    };
+
+    const handleRefresh = () => {
+        window.location.reload();
+    };
+
 
     const paginatedData = sortedData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
     const totalPages = Math.ceil(filteredData.length / itemsPerPage);
@@ -114,14 +127,20 @@ const MainPage = () => {
                             }
                             VAT ID
                         </th>
+                        <th>
+                            Actions
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
                     {paginatedData.map(item => (
-                        <tr key={item.id} onClick={() => navigate(`/view/${item.id}`)}>
-                            <td>{item.name}</td>
-                            <td>{item.email}</td>
-                            <td>{item.vat}</td>
+                        <tr key={item.id}>
+                            <td onClick={() => navigate(`/view/${item.id}`)}>{item.name}</td>
+                            <td onClick={() => navigate(`/view/${item.id}`)}>{item.email}</td>
+                            <td onClick={() => navigate(`/view/${item.id}`)}>{item.vat}</td>
+                            <td>
+                            <button id={item.id} type="button" className="btn btn-danger ms-2" onClick={(e) => handleDelete(Number(e.target.id))}>Delete Company</button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
