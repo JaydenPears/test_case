@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { MDBPagination, MDBPaginationItem, MDBPaginationLink } from 'mdb-react-ui-kit';
+import {Helmet} from "react-helmet";
 
 // import static:
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -65,6 +66,11 @@ const MainPage = () => {
 
     return (
         <div className="container mt-5">
+            <Helmet>
+                <title>
+                    Main Page
+                </title>
+            </Helmet>
             <h1 className="mb-4">Companies</h1>
             <input
                 type="text"
@@ -129,7 +135,10 @@ const MainPage = () => {
                         Previous
                     </MDBPaginationLink>
                 </MDBPaginationItem>
-                <MDBPaginationItem>
+                <MDBPaginationItem active={currentPage === 1
+                    ? true
+                    : false
+                }>
                     <MDBPaginationLink id="1" onClick={(e) => setCurrentPage(Number(e.target.id))} href='#'>
                         1
                     </MDBPaginationLink>
@@ -146,7 +155,10 @@ const MainPage = () => {
                 ? (
                     getArray(2, Math.min(4, totalPages)).map(
                         (item) =>
-                            <MDBPaginationItem key={item}>
+                            <MDBPaginationItem key={item} active={currentPage === item
+                                ? true
+                                : false
+                            }>
                                 <MDBPaginationLink
                                     id={item}
                                     key={item}
@@ -161,7 +173,10 @@ const MainPage = () => {
                 : (
                     getArray(currentPage - 2, Math.min(currentPage + 2, totalPages - 1)).map(
                         (item) =>
-                            <MDBPaginationItem key={item}>
+                            <MDBPaginationItem key={item} active={currentPage === item
+                                ? true
+                                : false
+                            }>
                                 <MDBPaginationLink
                                     id={item}
                                     key={item}
@@ -183,7 +198,10 @@ const MainPage = () => {
                 }
                 {totalPages !== 0 && totalPages !== 1
                     ?
-                    <MDBPaginationItem>
+                    <MDBPaginationItem active={currentPage === totalPages
+                        ? true
+                        : false
+                    }>
                         <MDBPaginationLink id={totalPages} onClick={(e) => setCurrentPage(Number(e.target.id))} href='#'>
                             {totalPages}
                         </MDBPaginationLink>
